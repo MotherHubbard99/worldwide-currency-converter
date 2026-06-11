@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "Dependencies": {
+  "dependencies": {
     "vite": "^8.0.16"
   }
 }
