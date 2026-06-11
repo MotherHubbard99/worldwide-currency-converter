@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worldwide Currency Converter</title>
+    <script type="module" crossorigin src="/assets/index-CjWOkmoL.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BHZUnOAU.css">
+  </head>
+
+  <body>
+    <header>
+      <h1>Worldwide Currency Converter</h1>
+    </header>
+
+    <main>
+      <!-- Input the amount in USD -->
+      <section id="converter">
+        <label for="usd-input">Amount in US Dollars:</label>
+        <input type="number" id="usd-input" placeholder="Enter amount" />
+
+        <!--Country Selection-->
+        <label for="country-select">Select Country:</label>
+        <select id="country-select">
+          <option value="EUR">Euro (EUR)</option>
+          <option value="GBP">British Pound (GBP)</option>
+          <option value="JPY">Japanese Yen (JPY)</option>
+          <option value="AUD">Australian Dollar (AUD)</option>
+          <option value="CAD">Canadian Dollar (CAD)</option>
+          <option value="CHF">Swiss Franc (CHF)</option>
+          <option value="CNY">Chinese Yuan (CNY)</option>
+          <option value="INR">Indian Rupee (INR)</option>
+          <option value="BRL">Brazilian Real (BRL)</option>
+          <option value="ZAR">South African Rand (ZAR)</option>
+        </select>
+
+        <!-- Conversion Result -->
+        <div id="conversion-result"></div>
+      </section>
+
+      <!-- Country Info Card -->
+      <section id="country-info">
+        <h2>Country Information</h2>
+        <p id="country-name"></p>
+        <p id="country-currency"></p>
+      </section>
+
+      <!--Chart Placeholder-->
+      <section id="chart">
+        <h2>Exchange Rate Chart</h2>
+        <canvas id="history-chart"></canvas>
+      </section>
+    </main>
+
+  </body>
+</html>
