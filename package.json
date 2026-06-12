@@ -1,24 +1,24 @@
 {
   "name": "worldwide-currency-converter",
   "version": "1.0.0",
-  "description": "",
+  "description": "Currency converter application that allows users to convert between different currencies using real-time exchange rates.",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "vite",
     "build": "vite build --emptyOutDir",
     "lint": "eslint *.js src/**/*.js",
     "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{html,json,js,ts,css}\"",
-    "test": "jest"
+    "test": "jest",
+    "preview": "vite preview"
   },
   "keywords": [],
-  "author": "",
+  "author": "Angie Hubbard",
   "license": "ISC",
- "devDependencies": {
-  "vite": "^8.0.16"
-}, 
-  
+  "devDependencies": {
+    "vite": "^8.0.16"
+  },
   "engines": {
-  "node": "20.x"
-}
-
+    "node": "20.x"
+  }
 }
