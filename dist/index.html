@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worldwide Currency Converter</title>
+    <script type="module" crossorigin src="/assets/index-DYnjsRB1.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BHZUnOAU.css">
+  </head>
+
+  <body>
+    <header>
+      <h1>Worldwide Currency Converter</h1>
+    </header>
+
+    <main>
+      <!-- Input the amount in USD to CONVERT -->
+      <section id="converter">
+        <label for="usd-input">Amount in US Dollars:</label>
+        <input type="number" id="usd-input" placeholder="Enter amount" />
+
+        <!--Country Selection-->
+        <label for="country-select">Select Country:</label>
+        <select id="country-select">
+          <option value="">--Select a Country--</option>
+        </select>
+
+      <!-- Error messages -->
+      <p id="error-messages" class="error"></p>
+
+        <!-- Conversion Result Card -->
+        <div id="conversion-result" class="card"></div>
+      </section>
+
+      <!-- Country Info Card -->
+      <section id="country-info">
+        <h2>Country Information</h2>
+          <div id="country-card" class="card"></div>
+      </section>
+
+      <!-- Exchange Rate History Chart Card -->
+      <section id="chart">
+        <h2>Exchange Rate Chart</h2>
+        <div class="card">
+          <canvas id="history-chart"></canvas>
+        </div>
+      </section>
+    </main>
+
+  </body>
+</html>

@@ -13,7 +13,7 @@
     </header>
 
     <main>
-      <!-- Input the amount in USD -->
+      <!-- Input the amount in USD to CONVERT -->
       <section id="converter">
         <label for="usd-input">Amount in US Dollars:</label>
         <input type="number" id="usd-input" placeholder="Enter amount" />
@@ -21,33 +21,28 @@
         <!--Country Selection-->
         <label for="country-select">Select Country:</label>
         <select id="country-select">
-          <option value="EUR">Euro (EUR)</option>
-          <option value="GBP">British Pound (GBP)</option>
-          <option value="JPY">Japanese Yen (JPY)</option>
-          <option value="AUD">Australian Dollar (AUD)</option>
-          <option value="CAD">Canadian Dollar (CAD)</option>
-          <option value="CHF">Swiss Franc (CHF)</option>
-          <option value="CNY">Chinese Yuan (CNY)</option>
-          <option value="INR">Indian Rupee (INR)</option>
-          <option value="BRL">Brazilian Real (BRL)</option>
-          <option value="ZAR">South African Rand (ZAR)</option>
+          <option value="">--Select a Country--</option>
         </select>
 
-        <!-- Conversion Result -->
-        <div id="conversion-result"></div>
+      <!-- Error messages -->
+      <p id="error-messages" class="error"></p>
+
+        <!-- Conversion Result Card -->
+        <div id="conversion-result" class="card"></div>
       </section>
 
       <!-- Country Info Card -->
       <section id="country-info">
         <h2>Country Information</h2>
-        <p id="country-name"></p>
-        <p id="country-currency"></p>
+          <div id="country-card" class="card"></div>
       </section>
 
-      <!--Chart Placeholder-->
+      <!-- Exchange Rate History Chart Card -->
       <section id="chart">
         <h2>Exchange Rate Chart</h2>
-        <canvas id="history-chart"></canvas>
+        <div class="card">
+          <canvas id="history-chart"></canvas>
+        </div>
       </section>
     </main>
 
