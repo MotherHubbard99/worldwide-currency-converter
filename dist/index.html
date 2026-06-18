@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Worldwide Currency Converter</title>
-    <script type="module" crossorigin src="/assets/index-DYnjsRB1.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BHZUnOAU.css">
+    <script type="module" crossorigin src="/assets/index-Du2qsNze.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-_PprZUM8.css">
   </head>
 
   <body>
@@ -18,15 +18,17 @@
       <section id="converter">
         <label for="usd-input">Amount in US Dollars:</label>
         <input type="number" id="usd-input" placeholder="Enter amount" />
+        <p>
+          <!--Country Selection-->
+          <label for="country-select">Select Country:</label>
+          <select id="country-select">
+            <option value="">--Select a Country--</option>
+          </select>
 
-        <!--Country Selection-->
-        <label for="country-select">Select Country:</label>
-        <select id="country-select">
-          <option value="">--Select a Country--</option>
-        </select>
+          <!-- Error messages -->
+        </p>
 
-      <!-- Error messages -->
-      <p id="error-messages" class="error"></p>
+        <p id="error-messages" class="error"></p>
 
         <!-- Conversion Result Card -->
         <div id="conversion-result" class="card"></div>
@@ -35,16 +37,11 @@
       <!-- Country Info Card -->
       <section id="country-info">
         <h2>Country Information</h2>
-          <div id="country-card" class="card"></div>
+        <div id="country-card" class="card"></div>
       </section>
 
-      <!-- Exchange Rate History Chart Card -->
-      <section id="chart">
-        <h2>Exchange Rate Chart</h2>
-        <div class="card">
-          <canvas id="history-chart"></canvas>
-        </div>
-      </section>
+      <!-- Favorites -->
+      <div id="storage-output" class="card"><div>
     </main>
 
   </body>

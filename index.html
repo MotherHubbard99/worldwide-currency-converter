@@ -17,15 +17,17 @@
       <section id="converter">
         <label for="usd-input">Amount in US Dollars:</label>
         <input type="number" id="usd-input" placeholder="Enter amount" />
+        <p>
+          <!--Country Selection-->
+          <label for="country-select">Select Country:</label>
+          <select id="country-select">
+            <option value="">--Select a Country--</option>
+          </select>
 
-        <!--Country Selection-->
-        <label for="country-select">Select Country:</label>
-        <select id="country-select">
-          <option value="">--Select a Country--</option>
-        </select>
+          <!-- Error messages -->
+        </p>
 
-      <!-- Error messages -->
-      <p id="error-messages" class="error"></p>
+        <p id="error-messages" class="error"></p>
 
         <!-- Conversion Result Card -->
         <div id="conversion-result" class="card"></div>
@@ -34,16 +36,11 @@
       <!-- Country Info Card -->
       <section id="country-info">
         <h2>Country Information</h2>
-          <div id="country-card" class="card"></div>
+        <div id="country-card" class="card"></div>
       </section>
 
-      <!-- Exchange Rate History Chart Card -->
-      <section id="chart">
-        <h2>Exchange Rate Chart</h2>
-        <div class="card">
-          <canvas id="history-chart"></canvas>
-        </div>
-      </section>
+      <!-- Favorites -->
+      <div id="storage-output" class="card"><div>
     </main>
 
     <script type="module" src="/js/main.js"></script>

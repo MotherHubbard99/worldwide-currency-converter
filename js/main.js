@@ -1,3 +1,9 @@
+import {
+    loadCountriesAPI,
+    getExchangeRate
+} from "./api.js";
+
+
 console.log("The currency converter has loaded!");
 
 //DOM elements ids from html file
@@ -10,10 +16,7 @@ const errorMessages = document.getElementById("error-messages");
 //country-select: loading country options from API
 async function loadCountries() {
     try {
-        //const response = await fetch("https://restcountries.com/v3.1/all"); //API server not sending the required CORS headers
-        const response = await fetch("https://countriesnow.space/api/v0.1/countries/currency");
-        const data = await response.json();
-        const countries = data.data; // Adjusted to match the new API response structure
+        const countries = await loadCountriesAPI();
 
         //sort countries alphabetically
         countries.sort((a, b) => a.name.localeCompare(b.name));
@@ -28,15 +31,14 @@ async function loadCountries() {
 
             const option = document.createElement("option");
             // currency code for exchange rate API
-            //used for conversion and for fetching historical data for the chart
-            option.value = country.currency;
+            //used for country info card
+            option.value = country.currency; //needed for converted amount output: DON'T DELETE
+            option.dataset.currency = country.currency;
             // display country name in the dropdown
             option.dataset.name = country.name;
             // Store ISO2 code for later use in country info card
             option.dataset.iso2 = country.iso2; 
-            // Store currency code for country info card
-            option.dataset.currency = country.currency; 
-
+            
             option.textContent = country.name;
 
             countrySelect.appendChild(option);
@@ -73,7 +75,7 @@ if (savedUSD && localStorage.getItem('lastCurrency')) {
 }
 
 //convert currency function
-function convertCurrency() {
+async function convertCurrency() {
     const usdAmount = parseFloat(usdInput.value);
     const selectedCurrency = countrySelect.value;
 
@@ -91,30 +93,31 @@ function convertCurrency() {
         return;
     }
 
-    //savefor history chart
+    //save to local storage
     localStorage.setItem('lastUSD', usdAmount);
     localStorage.setItem('lastCurrency', selectedCurrency);
+    
 
     //clear error messages
     errorMessages.textContent = "";
 
-    //fetch exchange rate from API and calculate conversion
-    fetch(`https://open.er-api.com/v6/latest/USD`)
-        .then(response => response.json())
-        .then(data => {
-            const exchangeRate = data.rates[selectedCurrency];
-            if (exchangeRate) {
-                const convertedAmount = usdAmount * exchangeRate;
-                resultDiv.textContent = `Converted Amount: ${convertedAmount.toFixed(2)} ${selectedCurrency}`;
-            } else {
-                errorMessages.textContent = "Error fetching exchange rate. Please try again later.";
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching exchange rate:", error);
-            errorMessages.textContent = "Error fetching exchange rate. Please try again later.";
-        });
+    //favorites
+    addFavorite(selectedCurrency);
+    showStoredValues();
 
+    //fetch exchange rate from API and calculate conversion
+    const rate = await getExchangeRate(selectedCurrency);
+
+    if (!rate) {
+        errorMessages.textContent = "Error fetching exchange rate.";
+        return;
+    }
+
+    const convertedAmount = usdAmount * rate;
+    resultDiv.textContent = `Converted Amount: ${convertedAmount.toFixed(2)} ${selectedCurrency}`;
+
+    //show favorite
+    showStoredValues();
 }
 
 //event listener for convert 
@@ -124,21 +127,71 @@ function setupEventListeners() {
     countrySelect.addEventListener("change", () => {
         const selected = countrySelect.options[countrySelect.selectedIndex];
 
-        if (!selected.value) {
-            document.getElementById("country-card").innerHTML = "";
-            return;
-        }
+        const currency = selected.value;
 
         const country = {
             name: selected.dataset.name,
             currency: selected.dataset.currency,
-            iso2: selected.dataset.iso2
+            iso2: selected.dataset.iso2, 
         };
 
         showCountryInfo(country);
         convertCurrency();
     });
 }
+
+function addFavorite(currency) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    if (!favorites.includes(currency)) {
+        favorites.push(currency);
+        localStorage.setItem('favorites', JSON.stringify(favorites))
+    }
+}
+
+function showStoredValues() {
+    const output = document.getElementById('storage-output');
+
+    const lastUSD = localStorage.getItem('lastUSD') || 'None saved';
+    const lastCurrency = localStorage.getItem('lastCurrency') || 'None saved';
+    const favoritesList = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    const favoritesHTML = favoritesList.length > 0
+        ? favoritesList.map(fav => `
+            <span class='favorite-item'>
+                ${fav}
+                <button class='remove-fav' data-currency='${fav}'>✖</button>
+            </span>
+        `).join('')
+        : 'None saved';
+
+    output.innerHTML = `
+        <h3>Saved Data</h3>
+        <p><strong>Last USD Amount:</strong> ${lastUSD}</p>
+        <p><strong>Last Currency Code:</strong> ${lastCurrency}</p>
+         <p><strong>Favorites:</strong> ${favoritesHTML}</p>
+    `;
+     // attach remove handlers
+    document.querySelectorAll(".remove-fav").forEach(btn => {
+        btn.addEventListener("click", () => {
+            removeFavorite(btn.dataset.currency);
+        });
+    });
+
+}
+
+//remove from favorites
+function removeFavorite(currency) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    favorites = favorites.filter(fav => fav !== currency);
+
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+
+    //refresh
+    showStoredValues(); 
+}
+
 
 //initialize the app by loading countries and setting up event listeners
 loadCountries();
@@ -148,5 +201,8 @@ loadCountries();
 if  (savedUSD && localStorage.getItem('lastCurrency')) {
     convertCurrency();
 }
+
+//favorites
+showStoredValues();
 
 setupEventListeners();
